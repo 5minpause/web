@@ -22,7 +22,11 @@ module LuckyWeb::Routeable
       if callback_result.is_a?(LuckyWeb::Response)
         callback_result
       else
-        response
+        if response.is_a?(LuckyWeb::Response)
+          response
+        else
+          {% raise "Must return a response. You probably forgot to use `render`" %}
+        end
       end
     end
   end

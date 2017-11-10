@@ -82,6 +82,13 @@ class PlainText::Index < LuckyWeb::Action
   end
 end
 
+class PlainText::Show < LuckyWeb::Action
+  action do
+    # no render here
+    render_text "plain"
+  end
+end
+
 describe LuckyWeb::Action do
   describe "routing" do
     it "creates URL helpers for the resourceful actions" do
@@ -132,6 +139,12 @@ describe LuckyWeb::Action do
       response = Tests::Index.new(build_context, params).call
       response.body.should contain "Rendered from Tests::IndexPage"
       response.content_type.should eq "text/html"
+    end
+  end
+
+  describe "error handling" do
+    it "warns" do
+      response = PlainText::Show.new(build_context, params).call
     end
   end
 
